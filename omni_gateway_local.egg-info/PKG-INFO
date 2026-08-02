@@ -1,0 +1,104 @@
+Metadata-Version: 2.4
+Name: omni-gateway-local
+Version: 1.0.0
+Summary: 🌐 Unified local AI gateway for OpenAI, Anthropic, Gemini, and Ollama with built-in routing.
+Author: Varun Ruhella
+License: MIT
+Project-URL: Homepage, https://github.com/varungor365/omni-gateway-local
+Project-URL: Repository, https://github.com/varungor365/omni-gateway-local
+Keywords: ai,gateway,llm,proxy,ollama,openai
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: fastapi>=0.100.0
+Requires-Dist: uvicorn>=0.23.0
+Requires-Dist: litellm>=1.0.0
+Requires-Dist: python-dotenv>=1.0.0
+Requires-Dist: pydantic>=2.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21.0; extra == "dev"
+Requires-Dist: httpx>=0.25.0; extra == "dev"
+Requires-Dist: black>=23.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"
+Dynamic: license-file
+
+<div align="center">
+
+# 🌐 omni-gateway-local
+
+**A single, unified API gateway for all local and remote LLMs.**
+
+[![PyPI version](https://badge.fury.io/py/omni-gateway-local.svg)](https://badge.fury.io/py/omni-gateway-local)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+<br/>
+
+</div>
+
+---
+
+## ✨ Why this exists
+
+If you're building AI applications, you probably have API keys for OpenAI, Anthropic, Gemini, and maybe a local Ollama instance running `llama3`. Managing all these endpoints in your code is a nightmare.
+
+**omni-gateway-local** solves this. It exposes a single OpenAI-compatible `/v1/chat/completions` endpoint. You point your apps to `http://localhost:8000`, and it routes the request to the correct provider based on the `model` parameter.
+
+### Features
+- 🔄 **Universal Compatibility:** Speak to Claude, Gemini, and Llama using the standard OpenAI SDK.
+- ⚡ **Lightning Fast:** Built on `FastAPI` and `LiteLLM`.
+- 🌊 **Streaming Support:** Full support for Server-Sent Events (SSE) streaming.
+
+---
+
+## 🚀 Quickstart
+
+### Install
+```bash
+pip install omni-gateway-local
+```
+
+### Configure
+Set your API keys in the environment:
+```bash
+export OPENAI_API_KEY="sk-..."
+export ANTHROPIC_API_KEY="sk-ant-..."
+export GEMINI_API_KEY="AIza..."
+```
+
+### Run
+```bash
+omni-gateway --port 8000
+```
+
+### Test
+```python
+from openai import OpenAI
+
+client = OpenAI(base_url="http://localhost:8000/v1", api_key="dummy")
+
+response = client.chat.completions.create(
+    model="claude-3-sonnet-20240229", # Gateway routes this to Anthropic!
+    messages=[{"role": "user", "content": "Hello!"}]
+)
+```
+
+---
+
+## 🤖 AI Agent Context
+
+See [CLAUDE.md](CLAUDE.md) for contribution guidelines.
+
+---
+
+## 📄 License
+
+MIT © Varun Ruhella. See [LICENSE](LICENSE) for details.

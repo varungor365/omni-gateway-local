@@ -1,0 +1,2 @@
+[console_scripts]
+omni-gateway = omni_gateway.cli:main
