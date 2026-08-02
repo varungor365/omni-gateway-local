@@ -1,8 +1,9 @@
-from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import StreamingResponse
-import litellm
 import json
 import os
+
+import litellm
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import StreamingResponse
 
 app = FastAPI(
     title="Omni Gateway Local",
@@ -17,7 +18,7 @@ DEFAULT_MODEL = os.getenv("DEFAULT_MODEL", "gpt-4o-mini")
 async def chat_completions(request: Request):
     try:
         body = await request.json()
-    except Exception:
+    except Exception:  # noqa: BLE001
         raise HTTPException(status_code=400, detail="Invalid JSON body")
         
     messages = body.get("messages", [])
@@ -44,7 +45,7 @@ async def chat_completions(request: Request):
         else:
             return response.model_dump()
             
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/health")
