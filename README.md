@@ -70,3 +70,11 @@ See [CLAUDE.md](CLAUDE.md) for contribution guidelines.
 ## 📄 License
 
 MIT © Varun Ruhella. See [LICENSE](LICENSE) for details.
+
+## Who this is for
+
+Omni Gateway Local gives developers one interface for working with local and remote LLM providers. It is intended for provider switching, local-model experiments, and applications that benefit from a unified API boundary.
+
+## Why star this repository
+
+Star this project if you integrate multiple LLM providers, build local AI applications, or want a small gateway layer to extend.
